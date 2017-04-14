@@ -1,0 +1,490 @@
+<!doctype HTML>
+<html>
+	<head>
+	 <meta charset="UTF-8"> 
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<style type="text/css">
+		
+			.header{
+				background: #eee;
+				min-height: 20%;
+				width: 100%;
+				margin:none;
+				color:#13CCFB;
+			}
+
+			#back{
+				font-size:12px;
+				position:absolute;
+			}
+			#procedures{
+				font-size:12px;
+				position:absolute;
+				left:40%;
+			}
+			#next{
+				font-size:12px;
+				position:absolute;
+				left:87%;
+			}
+			
+			.procedures{
+				position:absolute;
+				top:10%;
+				width:100%;
+				height:100%;
+				
+				background: #fff;
+			}
+			.gap{
+				
+				min-height: 5%;
+				width: 100%;
+				background-color: lightgrey;
+			}
+			.timeformat-select{
+				
+			}
+
+			.date-display{
+				background:darkgrey;
+				min-height: 8%;
+				width: 100%;
+				text-align:center;
+			}
+
+			#row3{
+				text-align:right;
+				color:grey;
+				font-size: 12px;
+			}
+			#row2{
+				text-align:right;
+				color:grey;
+				font-size: 15px;
+			}
+			#row1{
+				text-align:right;
+				color:grey;
+				font-size: 18px;
+			}
+			#row0{
+				text-align:right;
+				color:black;
+				font-size: 21px;
+				border:1px solid black;
+			}
+		</style>
+	</head>
+
+	<body onload="populateList()" ng-app="procedures-page">
+		<div class="header">
+			<span id="back">Back</span>
+			<span id="procedures">Procedures</span>
+			<button style="background:none;border:none;
+				color:#13CCFB;" id="next" type="submit">Next</button>
+			<br style="clear:both">
+		</div>
+		<div class="procedures">
+			<div class="gap"></div>
+			<div class="timeformat-select">
+				<span class="timeformat">24-Hour Format</span>
+			</div>
+			<div class="gap"></div>
+			<div class="timezone-select">
+				<span class="timezone">Set Automatically</span>
+				<br>
+				<span>Time Zone</span>
+			</div>
+			<div class="date-display" id="date-display" ><span style="">{{date}}</span></div>
+			<div id="wheel-menu">
+				
+			</div>
+		</div>
+		<script>
+			var weekday = new Array(7);
+			weekday[0] =  "Sun";
+			weekday[1] = "Mon";
+			weekday[2] = "Tue";
+			weekday[3] = "Wed";
+			weekday[4] = "Thu";
+			weekday[5] = "Fri";
+			weekday[6] = "Sat";
+			var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+			  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+			];
+
+				var date = new Array(7);
+				var time = new Array(7);
+				date[0]=new Date();
+				date[1]=new Date();
+				date[2]=new Date();
+				date[3]=new Date();
+				date[4]=new Date();
+				date[5]=new Date();
+				date[6]=new Date();
+				time[3]=new Date();
+			function fillDateArrays(factor){
+				var i=3+factor;
+				/*if(*/date[i].setDate(date[3].getDate()+factor);
+				console.log(date[i].getDate());/*<1){
+					date[i].setMonth(date[3].getDate()-1);
+					if(date[i].getMonth()==2){
+						if(date[i].getYear()%4==0) date[i].setDate(29+date[i].getDate());
+						else date[i].setDate(29+date[i].getDate());
+					}
+					else if((date[i].getMonth()%2==0&&date[i].getMonth()<7)|| (date[i].getMonth()%2!=0&&date[i].getMonth()>8)) date[i].setDate(30+date[i].getDate());
+					else if((date[i].getMonth()%2!=0&&date[i].getMonth()<8)|| (date[i].getMonth()%2==0&&date[i].getMonth()<9)) date[i].setDate(31+date[i].getDate());
+				}
+				else if(date[i].setDate(date[3].getDate()+factor)>29&&date[i].getMonth()==2&&date[i].getYear()%4==0) {
+					date[i].setMonth(date[i].getMonth()+1);
+					date[i].setDate(date[i].getDate()-29);
+				}
+				else if(date[i].setDate(date[3].getDate()+factor)>28&&date[i].getMonth()==2&&date[i].getYear()%4!=0) {
+					date[i].setMonth(date[i].getMonth()+1);
+					date[i].setDate(date[i].getDate()-28);
+				}
+				else if(date[i].setDate(date[3].getDate()+factor)>30&&((date[i].getMonth()%2==0&&date[i].getMonth()<7)|| (date[i].getMonth()%2!=0&&date[i].getMonth()>8))) {
+					date[i].setMonth(date[i].getMonth()+1);
+					date[i].setDate(date[i].getDate()-30);
+				}
+				else if(date[i].setDate(date[3].getDate()+factor)>31&&((date[i].getMonth()%2!=0&&date[i].getMonth()<8)|| (date[i].getMonth()%2!=0&&date[i].getMonth()>9))) {
+					date[i].setMonth(date[i].getMonth()+1);
+					date[i].setDate(date[i].getDate()-31);
+				}
+				else date[i].setDate(date[3].getDate()+factor)*/
+
+			}
+
+			function fillHoursArrays(factor)
+			{
+				var i=3+factor;
+				date[i].setHours(date[i].getHours()+factor);
+				
+				
+
+			}
+
+			function fillMinsArrays(factor) {
+
+				var i=3+factor;
+				date[i].setMinutes(date[i].getMinutes()+factor);
+			}
+
+			function populateList()
+			{
+			var html_table="";
+			html_table="<table>";
+
+				for(i=0;i<7;i++){
+					fillDateArrays(i-3);
+					fillHoursArrays(i-3);
+					fillMinsArrays(i-3);
+				}
+
+				for(i=0;i<3;i++)
+				{	
+					html_table+="<tr id='before"+(3-i)+"' style='text-align:right;color:grey;font-size: "+(12+3*i)+"px;'><td id='menu"+i+"_date'>" + weekday[date[i].getDay()] + "		" + monthNames[date[i].getMonth()] + "	" + date[i].getDate() + "</td>";
+					html_table+="<td id='menu"+i+"_hours'>" + date[i].getHours() + "</td>";
+					html_table+="<td id='menu"+i+"_minutes'>" + date[i].getMinutes() + "</td></tr>";
+				}
+					html_table+="<tr  id='menu3' style='text-align:right;color:black;font-size: 21px;'><td ng-model='datese' >Today";
+					html_table+="<td id='menu3_hours'>" + date[3].getHours() + "</td>";
+					html_table+="<td id='menu3_mins'>" + date[3].getMinutes() + "</td></tr>";
+				for(i=4;i<7;i++)
+				{
+					html_table+="<tr id='after"+(i-3)+"' style='text-align:right;color:grey;font-size: "+(18+3*(4-i))+"px;'><td id='menu"+i+"_date'>" + weekday[date[i].getDay()] + "		" + monthNames[date[i].getMonth()] + "	" + date[i].getDate() + "</td>";
+					html_table+="<td id='menu"+i+"_hours'>" + date[i].getHours() + "</td>";
+					html_table+="<td id='menu"+i+"_minutes'>" + date[i].getMinutes() + "</td></tr>";
+				}
+				html_table+="</table>";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				var dates=monthNames[date[3].getMonth()]+" "+date[3].getDate()+" ,"+(1900+date[3].getYear());
+				 
+				document.getElementById("date-display").innerHTML=dates;
+				html_table="";
+			}
+
+
+			function changeDateList()
+			{
+				var html_table="<table>";
+				for(i=0;i<7;i++){
+					fillDateArrays(i-3);
+				}
+
+				for(i=0;i<3;i++)
+				{	
+					html_table+="<tr id='before"+(3-i)+"' style='text-align:right;color:grey;font-size: "+(12+3*i)+"px;'><td id='menu"+i+"_date'>" + weekday[date[i].getDay()] + "		" + monthNames[date[i].getMonth()] + "	" + date[i].getDate() + "</td>";
+					html_table+="<td id='menu"+i+"_hours'>" + date[i].getHours() + "</td>";
+					html_table+="<td id='menu"+i+"_minutes'>" + date[i].getMinutes() + "</td></tr>";
+				}
+					html_table+="<tr  id='menu3' style='text-align:right;color:black;font-size: 21px;'><td ng-model='date' >" + weekday[date[3].getDay()] + "		" + monthNames[date[3].getMonth()] + "	" + date[3].getDate() + "</td>";
+					html_table+="<td id='menu3_hours'>" + date[3].getHours() + "</td>";
+					html_table+="<td id='menu3_mins'>" + date[3].getMinutes() + "</td></tr>";
+				for(i=4;i<7;i++)
+				{
+					html_table+="<tr id='after"+(i-3)+"' style='text-align:right;color:grey;font-size: "+(18+3*(4-i))+"px;'><td id='menu"+i+"_date'>" + weekday[date[i].getDay()] + "		" + monthNames[date[i].getMonth()] + "	" + date[i].getDate() + "</td>";
+					html_table+="<td id='menu"+i+"_hours'>" + date[i].getHours() + "</td>";
+					html_table+="<td id='menu"+i+"_minutes'>" + date[i].getMinutes() + "</td></tr>";
+				}
+				html_table+="</table>";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				var dates=monthNames[date[3].getMonth()]+" "+date[3].getDate()+" ,"+(1900+date[3].getYear());
+				 
+				document.getElementById("date-display").innerHTML=dates;
+				 
+				html_table="";
+			}
+
+			function changeHoursList()
+			{
+				var html_table="<table>";
+				for(i=0;i<7;i++){
+					fillHoursArrays(i-3);
+				}
+
+				for(i=0;i<3;i++)
+				{	
+					html_table+="<tr id='before"+(3-i)+"' style='text-align:right;color:grey;font-size: "+(12+3*i)+"px;'><td id='menu"+i+"_date'>" + weekday[date[i].getDay()] + "		" + monthNames[date[i].getMonth()] + "	" + date[i].getDate() + "</td>";
+					html_table+="<td id='menu"+i+"_hours'>" + date[i].getHours() + "</td>";
+					html_table+="<td id='menu"+i+"_minutes'>" + date[i].getMinutes() + "</td></tr>";
+				}
+					html_table+="<tr  id='menu3' style='text-align:right;color:black;font-size: 21px;'><td ng-model='date' >" + weekday[date[3].getDay()] + "		" + monthNames[date[3].getMonth()] + "	" + date[3].getDate() + "</td>";
+					html_table+="<td id='menu3_hours'>" + date[3].getHours() + "</td>";
+					html_table+="<td id='menu3_mins'>" + date[3].getMinutes() + "</td></tr>";
+				for(i=4;i<7;i++)
+				{
+					html_table+="<tr id='after"+(i-3)+"' style='text-align:right;color:grey;font-size: "+(18+3*(4-i))+"px;'><td id='menu"+i+"_date'>" + weekday[date[i].getDay()] + "		" + monthNames[date[i].getMonth()] + "	" + date[i].getDate() + "</td>";
+					html_table+="<td id='menu"+i+"_hours'>" + date[i].getHours() + "</td>";
+					html_table+="<td id='menu"+i+"_minutes'>" + date[i].getMinutes() + "</td></tr>";
+				}
+				html_table+="</table>";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				var dates=monthNames[date[3].getMonth()]+" "+date[3].getDate()+" ,"+(1900+date[3].getYear());
+				 
+				document.getElementById("date-display").innerHTML=dates;
+				 
+				html_table="";
+			}
+			function changeMinsList()
+			{
+				var html_table="<table>";
+				for(i=0;i<7;i++){
+					fillMinsArrays(i-3);
+				}
+
+				for(i=0;i<3;i++)
+				{	
+					html_table+="<tr id='before"+(3-i)+"' style='text-align:right;color:grey;font-size: "+(12+3*i)+"px;'><td id='menu"+i+"_date'>" + weekday[date[i].getDay()] + "		" + monthNames[date[i].getMonth()] + "	" + date[i].getDate() + "</td>";
+					html_table+="<td id='menu"+i+"_hours'>" + date[i].getHours() + "</td>";
+					html_table+="<td id='menu"+i+"_minutes'>" + date[i].getMinutes() + "</td></tr>";
+				}
+					html_table+="<tr  id='menu3' style='text-align:right;color:black;font-size: 21px;'><td  ng-model='date' >" + weekday[date[3].getDay()] + "		" + monthNames[date[3].getMonth()] + "	" + date[3].getDate() + "</td>";
+					html_table+="<td id='menu3_hours'>" + date[3].getHours() + "</td>";
+					html_table+="<td id='menu3_mins'>" + date[3].getMinutes() + "</td></tr>";
+				for(i=4;i<7;i++)
+				{
+					html_table+="<tr id='after"+(i-3)+"' style='text-align:right;color:grey;font-size: "+(18+3*(4-i))+"px;'><td id='menu"+i+"_date'>" + weekday[date[i].getDay()] + "		" + monthNames[date[i].getMonth()] + "	" + date[i].getDate() + "</td>";
+					html_table+="<td id='menu"+i+"_hours'>" + date[i].getHours() + "</td>";
+					html_table+="<td id='menu"+i+"_minutes'>" + date[i].getMinutes() + "</td></tr>";
+				}
+				html_table+="</table>";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				var dates=monthNames[date[3].getMonth()]+" "+date[3].getDate()+" ,"+(1900+date[3].getYear());
+				 
+				document.getElementById("date-display").innerHTML=dates;
+				 
+				html_table="";
+			}
+			var hrs,mins;
+			$(document).on('click', '#menu0_date', function() {
+				date[3].setDate(date[0].getDate()); 
+				date[3].setMonth(date[0].getMonth());  
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeDateList();
+			});
+			$(document).on('click', '#menu1_date', function() { 
+				date[3].setDate(date[1].getDate()); 
+				date[3].setMonth(date[1].getMonth());  
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeDateList();
+			});
+			$(document).on('click', '#menu2_date', function() { 
+				date[3].setDate(date[2].getDate()); 
+				date[3].setMonth(date[2].getMonth());  
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeDateList();
+			});
+			$(document).on('click', '#menu4_date', function() { 
+				date[3].setDate(date[4].getDate()); 
+				date[3].setMonth(date[4].getMonth());  
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeDateList();
+			});
+			$(document).on('click', '#menu5_date', function() { 
+				date[3].setDate(date[5].getDate()); 
+				date[3].setMonth(date[5].getMonth());  
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeDateList();
+			});
+			$(document).on('click', '#menu6_date', function() { 
+				date[3].setDate(date[6].getDate()); 
+				date[3].setMonth(date[6].getMonth());  
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeDateList();
+			});
+
+			$(document).on('click', '#menu1_hours', function() { 
+				date[3].setHours(date[1].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+			$(document).on('click', '#menu2_hours', function() { 
+				date[3].setHours(date[2].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+			$(document).on('click', '#menu4_hours', function() { 
+				date[3].setHours(date[4].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+			$(document).on('click', '#menu5_hours', function() { 
+				date[3].setHours(date[5].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+			$(document).on('click', '#menu6_hours', function() { 
+				date[3].setHours(date[6].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+
+			$(document).on('click', '#menu1_hours', function() { 
+				date[3].setHours(date[1].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+			$(document).on('click', '#menu2_hours', function() { 
+				date[3].setHours(date[2].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+			$(document).on('click', '#menu4_hours', function() { 
+				date[3].setHours(date[4].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+			$(document).on('click', '#menu5_hours', function() { 
+				date[3].setHours(date[5].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+			$(document).on('click', '#menu6_hours', function() { 
+				date[3].setHours(date[6].getHours());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeHoursList();
+			});
+
+
+			$(document).on('click', '#menu0_mins', function() { 
+				date[3].setMinutes(date[0].getMinutes());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeMinsList();
+			});
+				$(document).on('click', '#menu1_mins', function() { 
+				date[3].setMinutes(date[1].getMinutes());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeMinsList();
+			});
+			$(document).on('click', '#menu2_mins', function() { 
+				date[3].setMinutes(date[2].getMinutes());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeMinsList();
+			});
+			$(document).on('click', '#menu4_mins', function() { 
+				date[3].setMinutes(date[4].getMinutes());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeMinsList();
+			});
+			$(document).on('click', '#menu5_mins', function() { 
+				date[3].setMinutes(date[5].getMinutes());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeMinsList();
+			});
+			$(document).on('click', '#menu6_mins', function() { 
+				date[3].setMinutes(date[6].getMinutes());   
+				var myNode = document.getElementById("wheel-menu");
+				html_table="";
+				document.getElementById("wheel-menu").innerHTML=html_table;
+				 
+				changeMinsList();
+			});
+		</script>
+	</body>
+</html>
