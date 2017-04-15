@@ -1,6 +1,7 @@
 <!doctype HTML>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<style type="text/css">
 			.username{
 				position:absolute;
@@ -109,12 +110,31 @@
 		
 		<div class="login">
 			<img class="logo"src="bg-images/coslogo.png">
-			<div class="errormsg">Please enter valid username and password</div>
-			<input class="username"type="text" placeholder="Username">
-			<input class= "pass"type="password" placeholder="Password">
-			<button type="submit" class="login-button">LOG IN</button>
+			<form name ="signin"onsubmit="validateForm()">
+				<input type="text" name="email" class="username" type="text" placeholder="Username">
+				<input class= "pass" type="password" placeholder="Password">
+				<button type="submit" class="login-button">LOG IN</button>
+			</form>
 			<button id="contact">CONTACT</button>
 			<button id="hrs">HOURS</button>
 		</div>
+		<script type="text/javascript">
+			function validateEmail() {
+			    var x = document.forms["signin"]["email"].value;
+			    var atpos = x.indexOf("@");
+			    var dotpos = x.lastIndexOf(".");
+			    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+			        alert("Please enter valid username and password");
+			        return false;
+			    }
+			}
+
+			function validateForm(){
+				if(validateEmail()){
+					localStorage.setItem('formData', JSON.stringify($('form').serialize()));
+					console.log(localStorage.formData);
+				}
+			}
+		</script>
 	</body>
 </html>

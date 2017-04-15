@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<title></title>
+	<style type="text/css">
+		.header-btn{
+			background:#eee;
+			border:none;
+			color:blue;
+		}
+
+		.header{
+			background: #eee;
+			color:blue;
+			height:6%;
+		}
+		.content-row{
+			padding-top: 3%;
+			border-bottom: 1px solid grey;
+		}
+
+		.procedure-btn{
+			background: white;
+			border: 1px solid blue;
+			text-align: left;
+		}
+		.add-procedure-btn{
+			background: white;
+			border: none;
+		}
+		.undo-button{
+			min-height: 100%;
+		}
+		.images-row{
+			border-bottom: 1px solid grey;
+		}
+		.notes-row{
+			color:blue;
+		}
+		.button-row{
+			border:none;
+		}
+	</style>
+</head>
+<body class= "container-fluid">
+	<div class="header row" style="padding-top: none;">
+		<button class="col-xs-2 btn btn-default header-btn" style="text-align: left">Back</button>
+		<button class="col-xs-8 text-center btn btn-default header-btn">Treatment Summary</button>
+		<button class="col-xs-2 btn btn-default header-btn" style="text-align: right">Save</button>
+	</div>
+	<div class="row content-row">
+		<span class="col-xs-12">MMM DD, YYYY</span>
+		<span class="text-muted col-xs-12">Day at HH:MM</span>
+	</div>
+	<div class="row content-row">
+		<span class="col-xs-12">Location</span><br>
+		<span class=" col-xs-12 text-muted">Address</span>
+	</div>
+	<div class="row content-row images-row">
+		<span class="text-muted col-xs-6 text-center">BEFORE</span>
+		<span class="text-muted col-xs-6 text-center">AFTER</span>
+	</div>
+	<div class="row">
+		<img class="col-xs-6 img-responsive" src="http://placehold.it/100x100">
+		<img class="col-xs-6 img-responsive" src="http://placehold.it/100x100">
+	</div>	
+	<div class="clearfix"></div>
+	<div class="row content-row button-row">
+		<button class="col-xs-12 btn btn-default procedure-btn">Procedure 1</button>
+		<button class="col-xs-12 btn btn-default procedure-btn">Procedure 2</button>
+		<button class="col-xs-12 btn btn-default add-procedure-btn">Add Procedure</button>
+	</div>
+	<div class="row content-row notes-row">
+		<span class="col-xs-10">Notes</span>
+		<span class="col-xs-2 text-right text-muted">+</span>
+	</div>
+	<div class="row content-row">
+		<span class="col-xs-12">Results of the Last Lab</span><br>
+		<span class="col-xs-12 text-muted">Time</span>
+	</div>
+	<div class="row content-row">
+		<div class="col-xs-10">
+			<span>Observe the skin tan</span><br>
+			<span class="text-muted">Time</span>
+		</div>
+		<button class="col-xs-2 btn btn-danger undo-button">Undo</button>
+	</div>
+</body>
+</html>
